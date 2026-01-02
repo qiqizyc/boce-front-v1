@@ -122,12 +122,10 @@
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import * as echarts from 'echarts';
 
-// --- 数据状态 ---
 const targetUrl = ref('qiqinb.cn');
 const activeTab = ref(0);
-const selectedISPs = ref(['all']); // 默认选中"全选"的value
+const selectedISPs = ref(['all']);
 
-// 配置数据：工具栏
 const tools = [
   { name: '在线Ping', icon: 'mdi-lan-connect' },
   { name: '在线TCPing', icon: 'mdi-handshake-outline' },
@@ -137,7 +135,6 @@ const tools = [
   { name: 'IPv4/6查询', icon: 'mdi-ip-network' },
 ];
 
-// 配置数据：ISP
 const ispList = [
   { label: '全选', value: 'all' },
   { label: '中国电信', value: 'ct' },
@@ -146,18 +143,15 @@ const ispList = [
   { label: '港澳台、海外', value: 'overseas' },
 ];
 
-// 配置数据：统计卡片
-// 这里使用 reactive 方便后续更新数值
 const statistics = reactive([
   { label: '平均延迟', value: '--', unit: 'ms', color: 'primary', icon: 'mdi-timer-outline' },
   { label: '最快节点', value: '--', unit: '', color: 'success', icon: 'mdi-rocket-launch' },
   { label: '最慢节点', value: '--', unit: '', color: 'warning', icon: 'mdi-tortoise' },
   { label: '当前状态', value: '待机', unit: '', color: 'info', icon: 'mdi-list-status' },
 ]);
-// --- 逻辑方法 ---
 const startTest = () => {
   if (!targetUrl.value) return alert("请输入域名");
-  statistics[3].value = "测试中..."; // 更新状态示例
+  statistics[3].value = "测试中...";
   //
 };
 
@@ -183,7 +177,7 @@ const initMap = async () => {
     echarts.registerMap('china', chinaJson);
 
     const option = {
-      backgroundColor: '#fff', // 纯白背景融合卡片
+      backgroundColor: '#fff', //纯白背景融合卡片
       tooltip: {
         trigger: 'item',
         backgroundColor: 'rgba(0,0,0,0.7)',
@@ -195,13 +189,13 @@ const initMap = async () => {
         roam: false,
         zoom: 1.2,
         itemStyle: {
-          areaColor: '#f3f4f6', // 默认浅灰
-          borderColor: '#cfd8dc', // 浅蓝灰边框
+          areaColor: '#f3f4f6', //默认浅灰
+          borderColor: '#cfd8dc', //浅蓝灰边框
           borderWidth: 1
         },
         emphasis: {
           label: { show: false },
-          itemStyle: { areaColor: '#bbdefb' } // 悬停浅蓝
+          itemStyle: { areaColor: '#bbdefb' } //悬停浅蓝
         }
       },
       series: [
@@ -209,7 +203,7 @@ const initMap = async () => {
           name: '延迟数据',
           type: 'map',
           geoIndex: 0,
-          data: [] // 后续填充 {name: '北京', value: 20}
+          data: []
         }
       ]
     };
@@ -219,16 +213,13 @@ const initMap = async () => {
     mapInstance.hideLoading();
   }
 };
-
 const handleResize = () => mapInstance?.resize();
-
 onMounted(() => {
   nextTick(() => {
     initMap();
     window.addEventListener('resize', handleResize);
   });
 });
-
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
   mapInstance?.dispose();
@@ -240,7 +231,6 @@ onUnmounted(() => {
   width: 100%;
   height: 450px;
 }
-/* 微调 Input 样式，使其更圆润 */
 :deep(.v-field--variant-outlined .v-field__outline__start) {
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
