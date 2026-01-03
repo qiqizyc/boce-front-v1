@@ -136,10 +136,9 @@ const tools = [
 ];
 
 const ispList = [
-  { label: '全选', value: 'all' },
-  { label: '中国电信', value: 'ct' },
-  { label: '中国移动', value: 'cm' },
-  { label: '中国联通', value: 'cu' },
+  { label: '电信', value: 'ct' },
+  { label: '移动', value: 'cm' },
+  { label: '联通', value: 'cu' },
   { label: '港澳台、海外', value: 'overseas' },
 ];
 
